@@ -33,6 +33,10 @@ public class BookmarkService {
         return bookmarkRepository.findBookmarkById(id);
     }
 
+    public Bookmark findBookmarkByTitle(String titulo) {
+        return bookmarkRepository.findBookmarkByTitle(titulo);
+    }
+
     public void deleteBookmark(Long id) {
         bookmarkRepository.deleteById(id);
     }

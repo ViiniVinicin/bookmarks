@@ -1,4 +1,4 @@
-package br.com.booksmark.booksmark;
+        package br.com.booksmark.booksmark;
 
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +32,12 @@ public class BookmarkRepository {
                 .orElse(null);
     }
 
+    public Bookmark findBookmarkByTitle(String name) {
+        return bookmarks.stream()
+                .filter(bookmark -> bookmark.getTitle().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
+    }
     // Metodo para listar todos
     public List<Bookmark> findAll() {
         return new ArrayList<>(bookmarks);
