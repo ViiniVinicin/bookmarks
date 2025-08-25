@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
@@ -32,11 +33,11 @@ public class BookmarkRepository {
                 .orElse(null);
     }
 
-    public Bookmark findBookmarkByTitle(String name) {
+    // Metodo para encontrar bookmark pelo titulo
+    public Optional<Bookmark> findBookmarkByTitle(String titulo) {
         return bookmarks.stream()
-                .filter(bookmark -> bookmark.getTitle().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+                .filter(bookmark -> bookmark.getTitle().equalsIgnoreCase(titulo))
+                .findFirst();
     }
     // Metodo para listar todos
     public List<Bookmark> findAll() {

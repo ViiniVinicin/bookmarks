@@ -32,6 +32,12 @@ public class BookmarkController {
         return  ResponseEntity.ok(bookmarks);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Bookmark> findBookmarkByTitle(@RequestParam("title") String title) {
+        return bookmarkService.findBookmarkByTitle(title)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Bookmark> search(@PathVariable Long id) {

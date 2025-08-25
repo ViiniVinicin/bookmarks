@@ -3,6 +3,7 @@ package br.com.booksmark.booksmark;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookmarkService {
@@ -33,7 +34,7 @@ public class BookmarkService {
         return bookmarkRepository.findBookmarkById(id);
     }
 
-    public Bookmark findBookmarkByTitle(String titulo) {
+    public Optional<Bookmark> findBookmarkByTitle(String titulo) {
         return bookmarkRepository.findBookmarkByTitle(titulo);
     }
 
