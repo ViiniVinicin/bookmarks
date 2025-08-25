@@ -1,4 +1,4 @@
-package br.com.booksmark.booksmark;
+package br.com.bookmarks.bookmarks;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,16 +1,29 @@
-package br.com.booksmark.booksmark;
+package br.com.bookmarks.bookmarks.model.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data // Anotação do Lombok: Cria getters, setters, toString, equals, hashCode
-@AllArgsConstructor // Anotação do Lombok: Cria um construtor com todos os argumentos
-@NoArgsConstructor // Anotação do Lombok: Cria um construtor vazio
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bookmark {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String url;
-    private String description;
+
     private String title;
+
+    private String description;
+
 }

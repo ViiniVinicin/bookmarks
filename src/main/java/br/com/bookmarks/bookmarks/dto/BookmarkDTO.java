@@ -1,4 +1,4 @@
-package br.com.booksmark.booksmark;
+package br.com.bookmarks.bookmarks.dto;
 
 import lombok.Data;
 
