@@ -15,17 +15,31 @@ public class BookmarkRepository {
 
     public Bookmark save(Bookmark bookmark) {
         if (bookmark.getId() == null) {
-            // Novo Bookmark
+            // Lógica de criação (está perfeita)
             bookmark.setId(counterId.incrementAndGet());
             bookmarks.add(bookmark);
+            return bookmark;
         } else {
-            // Atualização de tarefa existente
-            deleteById(bookmark.getId());
-            bookmarks.add(bookmark);
+            // Lógica de atualização (edição)
+            Optional<Bookmark> optionalExistente = bookmarks.stream()
+                    .filter(b -> b.getId().equals(bookmark.getId()))
+                    .findFirst();
+
+            if (optionalExistente.isPresent()) {
+                Bookmark existente = optionalExistente.get();
+                // Atualiza o objeto que já está na lista
+                existente.setTitle(bookmark.getTitle());
+                existente.setUrl(bookmark.getUrl());
+                existente.setDescription(bookmark.getDescription());
+                return existente;
+            } else {
+                // Opcional: Lançar uma exceção se tentar salvar um bookmark com ID que não existe
+                throw new IllegalArgumentException("Nenhum bookmark encontrado com o ID: " + bookmark.getId());
+            }
         }
-        return bookmark;
     }
 
+    // Metodo para encontrar bookmark pelo id
     public Bookmark findBookmarkById(Long id) {
         return bookmarks.stream()
                 .filter(bookmark -> bookmark.getId().equals(id))
@@ -39,7 +53,8 @@ public class BookmarkRepository {
                 .filter(bookmark -> bookmark.getTitle().equalsIgnoreCase(titulo))
                 .findFirst();
     }
-    // Metodo para listar todos
+
+    // Metodo para listar todos bookmarks
     public List<Bookmark> findAll() {
         return new ArrayList<>(bookmarks);
     }
@@ -48,4 +63,6 @@ public class BookmarkRepository {
     public void deleteById (Long id){
         bookmarks.removeIf(bookmark -> bookmark.getId().equals(id));
     }
+
+
 }

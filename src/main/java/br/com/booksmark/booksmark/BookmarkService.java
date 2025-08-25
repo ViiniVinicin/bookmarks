@@ -1,6 +1,8 @@
 package br.com.booksmark.booksmark;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,21 @@ public class BookmarkService {
 
     public Optional<Bookmark> findBookmarkByTitle(String titulo) {
         return bookmarkRepository.findBookmarkByTitle(titulo);
+    }
+
+    public Optional<Bookmark> editBookmark(Long id, Bookmark bookmarkAtualizado) {
+        Bookmark bookmark = bookmarkRepository.findBookmarkById(id);
+
+        if (bookmark == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bookmark com id " + id + "não encontrado");
+        }
+
+        bookmark.setUrl(bookmarkAtualizado.getUrl());
+        bookmark.setDescription(bookmarkAtualizado.getDescription());
+        bookmark.setTitle(bookmarkAtualizado.getTitle());
+
+        Bookmark bookmarkSalvo = bookmarkRepository.save(bookmark);
+        return Optional.of(bookmarkSalvo);
     }
 
     public void deleteBookmark(Long id) {
