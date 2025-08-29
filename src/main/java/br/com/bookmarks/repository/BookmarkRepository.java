@@ -9,8 +9,6 @@ import java.util.Optional;
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-
     Optional<Bookmark> findByTitleContainingIgnoreCase(String title);
     public Bookmark findBookmarkById(Long id);
-
 }

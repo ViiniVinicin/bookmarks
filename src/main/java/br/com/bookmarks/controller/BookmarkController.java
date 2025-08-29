@@ -3,7 +3,6 @@ package br.com.bookmarks.controller;
 import br.com.bookmarks.dto.BookmarkCreateDTO;
 import br.com.bookmarks.dto.BookmarkResponseDTO;
 import br.com.bookmarks.dto.BookmarkUpdateDTO;
-import br.com.bookmarks.model.entity.Bookmark;
 import br.com.bookmarks.service.BookmarkService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -25,30 +24,25 @@ public class BookmarkController {
 
     @PostMapping
     // O tipo de retorno agora é BookmarkResponseDTO
-    public ResponseEntity<BookmarkResponseDTO> criarBookmark(@RequestBody @Valid BookmarkCreateDTO dto) {
+    public ResponseEntity<BookmarkResponseDTO> createBookmark(@RequestBody @Valid BookmarkCreateDTO dto) {
 
         // Chame o metodo correto passando o DTO inteiro
         // O tipo da variável de retorno agora é BookmarkResponseDTO
-        BookmarkResponseDTO bookmarkCriado = bookmarkService.criarBookmark(dto);
+        BookmarkResponseDTO createdBookmark = bookmarkService.criarBookmark(dto);
 
         // MELHORIA (BOA PRÁTICA): Construir a URI para o header "Location"
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest() // Pega a URL atual (/bookmarks)
-                .path("/{id}") // Adiciona o path do ID
-                .buildAndExpand(bookmarkCriado.id()) // Substitui {id} pelo ID do novo bookmark
+                .fromCurrentRequest()                   // Pega a URL atual (/bookmarks)
+                .path("/{id}")                          // Adiciona o path do ID
+                .buildAndExpand(createdBookmark.id())   // Substitui {id} pelo ID do novo bookmark
                 .toUri();
 
-        // Retorna o status 201 Created com a URI no header e o DTO no corpo
-        return ResponseEntity.created(location).body(bookmarkCriado);
+        return ResponseEntity.created(location).body(createdBookmark);
     }
 
-    // No BookmarkController.java
-
     @GetMapping
-    // CORREÇÃO 1: O método agora retorna uma lista de DTOs de resposta
     public ResponseEntity<List<BookmarkResponseDTO>> listBookmarks() {
 
-        // CORREÇÃO 2: A variável agora tem o tipo correto para receber o retorno do serviço
         List<BookmarkResponseDTO> bookmarksDTOs = bookmarkService.listBookmarks();
 
         return ResponseEntity.ok(bookmarksDTOs);
@@ -56,38 +50,26 @@ public class BookmarkController {
 
     @GetMapping("/search")
     public ResponseEntity<BookmarkResponseDTO> findBookmarkByTitle(@RequestParam("title") String title) {
-
-        return bookmarkService.findBookmarkByTitle(title)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        // Apenas chama o serviço. Se o serviço lançar a exceção, o @RestControllerAdvice vai pegar.
+        return ResponseEntity.ok(bookmarkService.findBookmarkByTitle(title));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bookmark> search(@PathVariable Long id) {
-        Bookmark bookmark = bookmarkService.findBookmarkById(id);
-        if (bookmark == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(bookmark);
+    public ResponseEntity<BookmarkResponseDTO> findBookmarkById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookmarkService.findBookmarkById(id));
     }
 
     @PutMapping("/{id}")
-    // O metodo agora retorna e recebe os DTOs corretos.
-    public ResponseEntity<BookmarkResponseDTO> atualizarBookmark(
-            @PathVariable Long id,
-            // Use o DTO de atualização e ative a validação com @Valid
-            @RequestBody @Valid BookmarkUpdateDTO dto) {
+    public ResponseEntity<BookmarkResponseDTO> atualizeBookmark(@PathVariable Long id,
+                                                                @RequestBody @Valid BookmarkUpdateDTO dto) {
 
-        // Chame o metodo correto do serviço que acabamos de refatorar
         BookmarkResponseDTO atualizedBookmark = bookmarkService.editBookmark(id, dto);
 
-        // Lógica de retorno simplificada. O caso "não encontrado" será
-        // tratado pelo GlobalExceptionHandler.
         return ResponseEntity.ok(atualizedBookmark);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>  delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBookmark(@PathVariable Long id) {
         bookmarkService.deleteBookmark(id);
         return ResponseEntity.noContent().build();
     }

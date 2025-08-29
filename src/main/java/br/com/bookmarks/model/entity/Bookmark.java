@@ -19,11 +19,7 @@ public class Bookmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String url;
-
     private String title;
-
     private String description;
-
 }
