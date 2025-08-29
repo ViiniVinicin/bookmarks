@@ -1,10 +1,10 @@
-package br.com.bookmarks.bookmarks.controller;
+package br.com.bookmarks.controller;
 
-import br.com.bookmarks.bookmarks.dto.BookmarkCreateDTO;
-import br.com.bookmarks.bookmarks.dto.BookmarkResponseDTO;
-import br.com.bookmarks.bookmarks.dto.BookmarkUpdateDTO;
-import br.com.bookmarks.bookmarks.model.entity.Bookmark;
-import br.com.bookmarks.bookmarks.service.BookmarkService;
+import br.com.bookmarks.dto.BookmarkCreateDTO;
+import br.com.bookmarks.dto.BookmarkResponseDTO;
+import br.com.bookmarks.dto.BookmarkUpdateDTO;
+import br.com.bookmarks.model.entity.Bookmark;
+import br.com.bookmarks.service.BookmarkService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;

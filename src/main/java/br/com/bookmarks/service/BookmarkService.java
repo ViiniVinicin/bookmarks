@@ -1,10 +1,10 @@
-package br.com.bookmarks.bookmarks.service;
+package br.com.bookmarks.service;
 
-import br.com.bookmarks.bookmarks.dto.BookmarkCreateDTO;
-import br.com.bookmarks.bookmarks.dto.BookmarkResponseDTO;
-import br.com.bookmarks.bookmarks.dto.BookmarkUpdateDTO;
-import br.com.bookmarks.bookmarks.model.entity.Bookmark;
-import br.com.bookmarks.bookmarks.repository.BookmarkRepository;
+import br.com.bookmarks.dto.BookmarkCreateDTO;
+import br.com.bookmarks.dto.BookmarkResponseDTO;
+import br.com.bookmarks.dto.BookmarkUpdateDTO;
+import br.com.bookmarks.model.entity.Bookmark;
+import br.com.bookmarks.repository.BookmarkRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

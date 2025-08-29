@@ -1,4 +1,4 @@
-package br.com.bookmarks.bookmarks.model.entity;
+package br.com.bookmarks.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

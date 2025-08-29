@@ -1,6 +1,6 @@
-package br.com.bookmarks.bookmarks.repository;
+package br.com.bookmarks.repository;
 
-import br.com.bookmarks.bookmarks.model.entity.Bookmark;
+import br.com.bookmarks.model.entity.Bookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

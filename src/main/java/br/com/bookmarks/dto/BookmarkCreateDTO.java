@@ -1,4 +1,4 @@
-package br.com.bookmarks.bookmarks.dto;
+package br.com.bookmarks.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
