@@ -2,12 +2,10 @@ package br.com.bookmarks.bookmarks.controller;
 
 import br.com.bookmarks.bookmarks.dto.BookmarkCreateDTO;
 import br.com.bookmarks.bookmarks.dto.BookmarkResponseDTO;
-import br.com.bookmarks.bookmarks.dto.BookmarkUpDateDTO;
+import br.com.bookmarks.bookmarks.dto.BookmarkUpdateDTO;
 import br.com.bookmarks.bookmarks.model.entity.Bookmark;
-import br.com.bookmarks.bookmarks.dto.BookmarkDTO;
 import br.com.bookmarks.bookmarks.service.BookmarkService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,11 +24,11 @@ public class BookmarkController {
     }
 
     @PostMapping
-    // CORREÇÃO 1: O tipo de retorno agora é BookmarkResponseDTO
+    // O tipo de retorno agora é BookmarkResponseDTO
     public ResponseEntity<BookmarkResponseDTO> criarBookmark(@RequestBody @Valid BookmarkCreateDTO dto) {
 
-        // CORREÇÃO 2: Chame o metodo correto passando o DTO inteiro
-        // CORREÇÃO 3: O tipo da variável de retorno agora é BookmarkResponseDTO
+        // Chame o metodo correto passando o DTO inteiro
+        // O tipo da variável de retorno agora é BookmarkResponseDTO
         BookmarkResponseDTO bookmarkCriado = bookmarkService.criarBookmark(dto);
 
         // MELHORIA (BOA PRÁTICA): Construir a URI para o header "Location"
@@ -74,18 +72,18 @@ public class BookmarkController {
     }
 
     @PutMapping("/{id}")
-    // CORREÇÃO 1: O metodo agora retorna e recebe os DTOs corretos.
+    // O metodo agora retorna e recebe os DTOs corretos.
     public ResponseEntity<BookmarkResponseDTO> atualizarBookmark(
             @PathVariable Long id,
-            // CORREÇÃO 2: Use o DTO de atualização e ative a validação com @Valid
-            @RequestBody @Valid BookmarkUpDateDTO.BookmarkUpdateDTO dto) {
+            // Use o DTO de atualização e ative a validação com @Valid
+            @RequestBody @Valid BookmarkUpdateDTO dto) {
 
-        // CORREÇÃO 3: Chame o método correto do serviço que acabamos de refatorar
-        BookmarkResponseDTO bookmarkAtualizado = bookmarkService.editBookmark(id, dto);
+        // Chame o metodo correto do serviço que acabamos de refatorar
+        BookmarkResponseDTO atualizedBookmark = bookmarkService.editBookmark(id, dto);
 
-        // CORREÇÃO 4: Lógica de retorno simplificada. O caso "não encontrado" será
-        // tratado pelo GlobalExceptionHandler que vamos criar.
-        return ResponseEntity.ok(bookmarkAtualizado);
+        // Lógica de retorno simplificada. O caso "não encontrado" será
+        // tratado pelo GlobalExceptionHandler.
+        return ResponseEntity.ok(atualizedBookmark);
     }
 
     @DeleteMapping("/{id}")
